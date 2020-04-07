@@ -1,3 +1,5 @@
+rem Test ActivityLogging.txt
+
 hm1!=new HashMap()
 hm2!=new HashMap()
 

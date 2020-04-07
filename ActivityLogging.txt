@@ -1,0 +1,50 @@
+hm1!=new HashMap()
+hm2!=new HashMap()
+
+tableName$="USER001"
+it!=fieldNames!.keySet().iterator()
+while it!.hasNext()
+	f$=it!.next()
+	
+	f1$=fields!.getAttribute(f$,"DBFIELD")
+	if f1$="" then continue
+	
+	if pos(tableName$+"."-f1$)=1 then
+		f1$=f1$(len(tableName$)+2)
+	endif
+	if pos("."=f1$) then continue
+	
+	hm1!.add(f1$,f$)
+	hm2!.add(f$,f1$)
+wend
+
+fieldSelection!=new DataRow()
+
+ophalen logvelden f1$
+
+f$=hm1!.get(f1$)
+fieldSelection!.setFieldValue(f$,"")
+
+dim rec$:#getTemplate("USER001"+"_log")
+first=1,id$=""
+tmList!=#readRecords("USER001"+"_log",key$)
+itList!=tmList!.keySet().iterator()
+while itList!.hasNext()
+	rec$=next()
+	if first=1 and rec.logType$<>"I" then
+		lees vorige record.... (rec.id$ - datum), alleen bij selectie vanaf datum of alternatieve knum
+		dr1!=#setFieldValues(fieldSelecion!,attr!,user001!)
+		first=0
+	endif
+	rec$->rec!
+	dr2!=#setFieldValues(fieldSelecion!,attr!,rec!)
+	if first=0 and rec.logType$="M" and dr1!<>dr2! and rec.id$=id$ then
+		make ar! (evt meerdere) type "C" -> rs!
+	endif
+	if rec.logType$="D" then
+		make ar! type "D" -> rs!
+	endif
+	id$=rec.id$
+	dr1!=dr2!
+	first=0
+wend

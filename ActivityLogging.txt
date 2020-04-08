@@ -1,4 +1,5 @@
 rem Test ActivityLogging.txt
+rem ca65123 change
 
 hm1!=new HashMap()
 hm2!=new HashMap()
